@@ -13,7 +13,7 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
-    await Client.send_message(event.chat_id, telethon.types.InputMediaDice('🎰'))
+    # await Client.send_message(event.chat_id, telethon.types.InputMediaDice('🎰'))
     await Client.send_file(event.chat_id,
                            telethon.types.InputMediaDice('🎰'))
 
