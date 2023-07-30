@@ -7,9 +7,8 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
-    dice = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
-    value = dice.media.value
-    print(f"The dice rolled: {value}")
+    dice1 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
+    dice2 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
 
     keyboard = [
         [
@@ -25,8 +24,8 @@ async def roll_dice(event):
         [Button.inline('Second button' , b'roll')],
     ]
     # await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
-    await event.respond('a', buttons=keyboard)
-    await event.respond('b', buttons=keyboard2)
+    await event.respond(f"The dice1 rolled: {dice1.media.value}", buttons=keyboard)
+    await event.respond(f"The dice2 rolled: {dice2.media.value}", buttons=keyboard2)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
