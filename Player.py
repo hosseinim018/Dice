@@ -7,4 +7,6 @@ class Player:
         self.id = id
         self.betList = betList
 
+    def wallet(self):
+        return self.amount['wallet']
 
