@@ -4,6 +4,7 @@ class laby:
         pass
     def addPlayer(self, player):
         self.players.append(player)
+        print(f'player {player.id} joined to the laby')
 
     def amount(self):
         """
