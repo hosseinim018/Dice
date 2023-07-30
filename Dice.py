@@ -15,7 +15,7 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 async def roll_dice(event):
     dice = InputMediaDice('🎲')
     await Client.send_file(event.chat_id, dice)
-@Client.on(events.NewMessage())
+@Client.on(events.NewMessage(from_users='Telepostseenerbot', incoming=True))
 async def handle(event):
     print(event)
 
