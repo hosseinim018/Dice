@@ -29,6 +29,7 @@ async def roll_dice(event):
         ],
         resize_keyboard=True
     )
+    await Client.send_message(event.chat_id, 'Choose an option:', reply_markup=keyboard)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
