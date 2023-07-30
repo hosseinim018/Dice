@@ -1,11 +1,6 @@
 from telethon.sync import TelegramClient, events, Button
 from telethon.tl.types import InputMediaDice
-
-api = {
-    'api_id':1719463,
-    'api_hash':'a4517a41ddb3b3c8bd544e45db0a7dc3',
-    'bot_token':'968534296:AAG6OR6RNnBKhwLk8DR1b6SjIoSVUpTxu6Y'
-}
+import api from config
 
 proxy = ("socks5", '127.0.0.1', 10808)
 
