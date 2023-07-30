@@ -22,11 +22,11 @@ async def roll_dice(event):
     #     ]
     # ]
     # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
-    keyboard = event.client.build_reply_markup([
-        [Button.text('First button')],
-        [Button.text('Second button')],
-        [Button.switch_inline('Second button')],
-    ])
+    keyboard = [
+        # [Button.text('First button')],
+        # [Button.text('Second button')],
+        [Button.switch_inline('Second button' ,'/roll')],
+    ]
     await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
