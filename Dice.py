@@ -15,11 +15,12 @@ async def roll_dice(event):
     message = '🎲'
     await Client.send_message(event.chat_id, message)
 
-
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
     print(f"The dice rolled: {value}")
+    print(event.message)
+    print(event.message.dice)
 
 
 with Client:
