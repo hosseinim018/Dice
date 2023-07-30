@@ -3,7 +3,7 @@ from telethon.sync import TelegramClient, events, Button
 api = {
     'api_id':'',
     'api_hash':'',
-    'bot_token':''
+    'bot_token':'968534296:AAG6OR6RNnBKhwLk8DR1b6SjIoSVUpTxu6Y'
 }
 proxy = ("socks5", '127.0.0.1', 10808)
 
