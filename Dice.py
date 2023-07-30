@@ -26,8 +26,7 @@ async def roll_dice(event):
         rows=[
             [KeyboardButton('Button 1')],
             [KeyboardButton('Button 2'), KeyboardButton('Button 3')],
-        ],
-        resize_keyboard=True
+        ]
     )
     await Client.send_message(event.chat_id, 'Choose an option:', reply_markup=keyboard)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
