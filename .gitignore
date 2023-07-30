@@ -10,5 +10,7 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
+Dice.py
+.idea
 pip-selfcheck.json
 
