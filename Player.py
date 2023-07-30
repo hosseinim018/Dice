@@ -15,3 +15,6 @@ class Player:
         self.amount['wallet'] -= num
         return self.amount['bet']
 
+    def getBetAmount(self):
+        return self.amount['bet']
+
