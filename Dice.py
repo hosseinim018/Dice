@@ -25,8 +25,8 @@ async def roll_dice(event):
         [Button.inline('Second button' , b'roll')],
     ]
     # await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
-    await event.respond('', buttons=keyboard)
-    await event.respond('', buttons=keyboard2)
+    await event.respond('a', buttons=keyboard)
+    await event.respond('b', buttons=keyboard2)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
