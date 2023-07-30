@@ -7,7 +7,7 @@ api = {
 }
 proxy = ("socks5", '127.0.0.1', 10808)
 
-Client = TelegramClient('Dice_session', int(api['api_id']), api['api_hash']).start(bot_token=api['bot_token'])
+Client = TelegramClient('Dice_session').start(bot_token=api['bot_token'])
 
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
