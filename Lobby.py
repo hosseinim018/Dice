@@ -1,4 +1,4 @@
-class laby:
+class Lobby:
     players: list = []
     def __int__(self):
         pass
