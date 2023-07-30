@@ -10,3 +10,8 @@ class Player:
     def wallet(self):
         return self.amount['wallet']
 
+    def bet(self, num: int):
+        self.amount['bet'] = num
+        self.amount['wallet'] -= num
+        return self.amount['bet']
+
