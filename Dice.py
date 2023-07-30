@@ -15,11 +15,11 @@ async def roll_dice(event):
 
     keyboard = [
         [
-            Button.text('a button'),
-            Button.text('b button')
+            Button.text('/start'),
         ],
         [
-            Button.text('c button'),
+            Button.text('/roll'),
+            Button.text('b button')
         ]
     ]
     # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
