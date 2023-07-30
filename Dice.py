@@ -10,10 +10,10 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 async def roll_dice(event):
     dice = InputMediaDice('🎲')
     d = await Client.send_file(event.chat_id, dice)
-    last_message = await Client.get_messages(event.chat_id, limit=1)
+    # last_message = await Client.get_messages(event.chat_id, limit=1)
     print(d)
     print('---------')
-    print(last_message)
+    # print(last_message)
 
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
