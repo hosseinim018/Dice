@@ -1,6 +1,6 @@
 from telethon.sync import TelegramClient, events, Button
 from telethon.tl.types import InputMediaDice
-import api from config
+from config import api
 
 proxy = ("socks5", '127.0.0.1', 10808)
 
