@@ -10,7 +10,8 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
-Dice.py
+Game.py
+config.py
 .idea
 pip-selfcheck.json
 
