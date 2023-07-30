@@ -12,7 +12,7 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
-    message = u'\U0001F3B2'
+    message = '🎲'
     await Client.send_message(event.chat_id, message)
 
 
