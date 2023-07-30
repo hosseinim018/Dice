@@ -13,20 +13,21 @@ async def roll_dice(event):
     value = dice.media.value
     print(f"The dice rolled: {value}")
 
-    # keyboard = [
-    #     [
-    #         Button.inline("prima opzione", b"1"),
-    #     ],
-    #     [
-    #         Button.inline("prima opzione", b"1"),
-    #     ]
-    # ]
-    # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
     keyboard = [
-        [Button.text('a button')],
-        [Button.text('Second button')],
-        [Button.switch_inline('Second button' ,'/roll')],
+        [
+            Button.text('a button'),
+            Button.text('b button')
+        ],
+        [
+            Button.text('c button'),
+        ]
     ]
+    # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
+    # keyboard = [
+    #     [Button.text('a button')],
+    #     [Button.text('Second button')],
+    #     [Button.switch_inline('Second button' ,'/roll')],
+    # ]
     await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
