@@ -13,6 +13,7 @@ class laby:
         """
         amount = 0
         for player in self.players:
-            amount += player.bet
+            betAmount = player.bet
+            amount += betAmount
 
         return amount
