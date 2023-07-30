@@ -11,7 +11,8 @@ async def roll_dice(event):
     dice = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
     print(dice)
     print('---------')
-    print(dice.media)
+    value = dice.media.value
+    print(f"The dice rolled: {value}")
 
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
