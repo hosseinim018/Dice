@@ -1,5 +1,6 @@
 from telethon.sync import TelegramClient, events, Button
-import socks
+import telethon
+
 api = {
     'api_id':1719463,
     'api_hash':'a4517a41ddb3b3c8bd544e45db0a7dc3',
@@ -12,8 +13,9 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
-    message = '🎲'
-    await Client.send_message(event.chat_id, message)
+    await Client.send_message(event.chat_id, telethon.types.InputMediaDice('🎰'))
+    await Client.send_file(event.chat_id,
+                           telethon.types.InputMediaDice('🎰'))
 
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
