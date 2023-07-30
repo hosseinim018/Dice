@@ -1,8 +1,6 @@
 from telethon.sync import TelegramClient, events, Button
 from telethon.tl.types import InputMediaDice
 from config import api
-from telethon.tl.types import ReplyKeyboardMarkup, KeyboardButton
-
 proxy = ("socks5", '127.0.0.1', 10808)
 
 Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=proxy).start(bot_token=api['bot_token'])
@@ -23,13 +21,12 @@ async def roll_dice(event):
         ]
     ]
     # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
-    # keyboard = [
-    #     [Button.text('a button')],
-    #     [Button.text('Second button')],
-    #     [Button.switch_inline('Second button' ,'/roll')],
-    # ]
+    keyboard2 = [
+        [Button.inline('Second button' , b'roll')],
+    ]
     # await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
-    await event.respond("Hello!", buttons=keyboard)
+    await event.respond(buttons=keyboard)
+    await event.respond(buttons=keyboard2)
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
