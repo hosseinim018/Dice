@@ -15,8 +15,6 @@ async def roll_dice(event):
 async def handle_dice(event):
     value = event.message.dice.value
     print(f"The dice rolled: {value}")
-    print(event.message)
-    print(event.message.dice)
 
 
 with Client:
