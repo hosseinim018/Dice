@@ -14,6 +14,7 @@ class laby:
         amount = 0
         for player in self.players:
             betAmount = player.bet
+            print(betAmount)
             amount += betAmount
 
         return amount
