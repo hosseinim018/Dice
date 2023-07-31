@@ -5,6 +5,10 @@ class payout:
     def checkEven(self, num:int)->bool:
         """
             this function check a number is even or odd
+
+            Args:
+                num (int): the number of dice rolled
+
             :return boolean if number be even return True else False
         """
         if num % 2 == 0:
