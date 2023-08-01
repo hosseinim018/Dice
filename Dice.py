@@ -20,6 +20,7 @@ async def join(event):
     player = Player(event.chat_id)
     lobby.addPlayer(player)
     wallet = player.wallet()
+    await event.respond(f'the number of players is: {len(lobby.players)}')
     await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
 
 @Client.on(events.NewMessage(pattern='/roll'))
