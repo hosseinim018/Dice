@@ -7,9 +7,6 @@ class payout:
         """
         self.rolls = rolls
         self.predict = predict
-        f = self.factor()
-        if f != None:
-            print(f)
     def isEven(self, num:int) -> bool:
         """
             this function check a number is even or odd
