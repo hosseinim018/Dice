@@ -20,8 +20,9 @@ async def join(event):
     player = Player(event.chat_id)
     lobby.addPlayer(player)
     wallet = player.wallet()
+    bet = player.bet(10_000)
     await event.respond(f'the number of players is: {len(lobby.players)}')
-    await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
+    await event.respond(f'the total amount of money player {player.id} is ${wallet} with bet with amount {bet}')
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
