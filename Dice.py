@@ -24,45 +24,67 @@ async def join(event):
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
+    for player in lobby.players:
+        if player.id == event.chat_id:
 
-    dice1 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
-    dice2 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
+            dice1 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
+            dice2 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
 
-    rolls = (dice1.media.value, dice2.media.value)
-    lobby.set_rolls(rolls)
+            rolls = (dice1.media.value, dice2.media.value)
+            lobby.set_rolls(rolls)
 
-    keyboard = [
-        [
-            Button.text('/start'),
-        ],
-        [
-            Button.text('/roll'),
-            Button.text('b button')
-        ]
-    ]
-    # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
-    keyboard2 = [
-        [Button.inline('Second button' , b'roll')],
-    ]
-    # await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
-    await event.respond(f"The dice1 rolled: {dice1.media.value}", buttons=keyboard)
-    await event.respond(f"The dice2 rolled: {dice2.media.value}", buttons=keyboard2)
-    await event.respond(f"the amount of lobby is: {lobby.amount()}")
+            keyboard = [
+                [
+                    Button.text('/start'),
+                ],
+                [
+                    Button.text('/roll'),
+                    Button.text('/betlist')
+                ]
+            ]
+            # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
+            keyboard2 = [
+                [Button.inline('Second button' , b'roll')],
+            ]
+            # await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
+            await event.respond(f"The dice1 rolled: {dice1.media.value}", buttons=keyboard)
+            await event.respond(f"The dice2 rolled: {dice2.media.value}", buttons=keyboard2)
+            await event.respond(f"the amount of lobby is: {lobby.amount()}")
 
-    players = lobby.players
-    lobby.pay()
-    for player in players:
-        if event.chat_id == player.id:
-            wallet = player.wallet()
-            await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
-
+            players = lobby.players
+            lobby.pay()
+            for player in players:
+                if event.chat_id == player.id:
+                    wallet = player.wallet()
+                    await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
+    else:
+        await event.respond('first join to a lobby.\npress /join')
 
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
     print(f"The dice rolled: {value}")
 
+@Client.on(events.NewMessage(pattern='/roll'))
+async def Betlist(event):
+    msg = """"""
+    betlist = ['minimumEven','minimumOdd','maximumEven','maximumOdd','roll1Even','roll2Even','sumEven']
+    # bet.encode('utf-8')
+    keyboard = [[Button.inline(bet , 'betlist')] for bet in betlist]
+    await event.respond(msg, buttons=keyboard)
 
+@Client.on(events.CallbackQuery())
+async def handle_callback_query(event):
+    # Get the callback data from the event
+    data = event.data.decode()
+    if data == 'betlist':
+        print(event)
+        print(event.message.text)
+        for player in lobby.players:
+            if player.id == event.chat_id:
+                player.set_betlist(event.message.text)
+        # msg = Client.get_messages(event.chat_id, ids=event.message_id)
+        # print(msg)
 
 with Client:
     Client.run_until_disconnected()
