@@ -84,4 +84,5 @@ class payout:
 
 
 
+
 p = payout((2, 3), ['minimumEven', 'minimumOdd',], 10000, 100000)
