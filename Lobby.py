@@ -43,5 +43,5 @@ class Lobby:
                 pay = amount * factor
                 total_pay += pay
                 player.pay(pay)
-        print(f'total pay is:{total_pay} and bank is {lobby_amount}')
+
         self.players: list = []
