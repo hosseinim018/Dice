@@ -68,7 +68,7 @@ async def handle_dice(event):
     value = event.message.dice.value
     event.respond(f"The dice rolled: {value}")
 
-@Client.on(events.NewMessage(pattern='/roll'))
+@Client.on(events.NewMessage(pattern='/betlist'))
 async def Betlist(event):
     msg = """"""
     betlist = ['minimumEven','minimumOdd','maximumEven','maximumOdd','roll1Even','roll2Even','sumEven']
