@@ -1,8 +1,8 @@
 from Payout import payout
 class Lobby:
-    players: list = []
     def __int__(self, rolls: tuple):
         self.rolls: tuple = rolls
+        self.players: list = []
 
     def addPlayer(self, player):
         self.players.append(player)
