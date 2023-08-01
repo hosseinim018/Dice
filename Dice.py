@@ -4,10 +4,8 @@ from config import api
 from Lobby import Lobby
 from Player import Player
 
-players = []
+
 lobby = Lobby()
-
-
 
 proxy = ("socks5", '127.0.0.1', 10808)
 
@@ -16,7 +14,6 @@ Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=pr
 
 @Client.on(events.NewMessage(pattern='/join'))
 async def join(event):
-    # players.append(Player(event.chat_id, ['minimumEven', 'minimumOdd', ]))
     player = Player(event.chat_id)
     lobby.addPlayer(player)
     wallet = player.wallet()
