@@ -71,12 +71,12 @@ class payout:
                 print(risks[i] + 1)
                 factor *= (risks[i] + 1)
             else:
-                print('you lose because once of your bets incorrect')
-                print(f'incorrect bet: {i}')
+                # print('you lose because once of your bets incorrect')
+                # print(f'incorrect bet: {i}')
                 win = False
                 break
         if win:
-            print('you win', factor)
+            # print('you win', factor)
             return factor
 
 

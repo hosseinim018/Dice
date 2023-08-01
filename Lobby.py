@@ -8,7 +8,7 @@ class Lobby:
 
     def addPlayer(self, player):
         self.players.append(player)
-        print(f'player {player.id} joined to the lobby')
+        # print(f'player {player.id} joined to the lobby')
 
     def amount(self):
         """
@@ -41,7 +41,7 @@ class Lobby:
         for player in self.players:
             factor = player.factor
             if factor != None:
-                print('factor', factor)
+                # print('factor', factor)
                 pay = amount * factor
                 total_pay += pay
                 player.pay(pay)
