@@ -6,6 +6,7 @@ class Player:
         }
         self.id = id
         self.betList = betList
+        self.factor = 0
 
     def wallet(self):
         return self.amount['wallet']
@@ -24,6 +25,9 @@ class Player:
         :param pay: amount add with wallet amount
         """
         self.amount['wallet'] += pay
+
+    def get_factor(self):
+        return self.factor
 
 
 
