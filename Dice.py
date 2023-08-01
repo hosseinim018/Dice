@@ -47,7 +47,7 @@ async def roll_dice(event):
                 rolls = (dice1.media.value, dice2.media.value)
                 lobby.set_rolls(rolls)
 
-                await event.respond(f"The dice2 rolled: {dice2.media.value}\nThe dice1 rolled: {dice1.media.value}", buttons=keyboard2)
+                await event.respond(f"The dice1 rolled: {dice1.media.value}\nThe dice2 rolled: {dice2.media.value}")
                 await event.respond(f"the amount of lobby is: {lobby.amount()}")
                 if len(player.betList) == 0:
                     await event.respond('you should set a bet List. press /betlist')
