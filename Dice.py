@@ -66,7 +66,7 @@ async def roll_dice(event):
 @Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
     value = event.message.dice.value
-    print(f"The dice rolled: {value}")
+    event.respond(f"The dice rolled: {value}")
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def Betlist(event):
