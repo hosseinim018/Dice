@@ -1,5 +1,5 @@
 class payout:
-    def __init__(self, rolls: tuple, predict: list, betAmount, lobbyAmount):
+    def __init__(self, rolls: tuple, predict: list):
         """
          Args:
                 rolls(tuple): rolls have 2 index rolls number 1 and 2
@@ -7,6 +7,9 @@ class payout:
         """
         self.rolls = rolls
         self.predict = predict
+        f = self.factor()
+        if f != None:
+            print(f)
     def isEven(self, num:int) -> bool:
         """
             this function check a number is even or odd
@@ -82,4 +85,3 @@ class payout:
 
 
 
-p = payout((2, 3), ['minimumEven', 'minimumOdd',], 10000, 100000)
