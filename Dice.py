@@ -11,6 +11,21 @@ proxy = ("socks5", '127.0.0.1', 10808)
 
 Client = TelegramClient('Dice_session', api['api_id'], api['api_hash'], proxy=proxy).start(bot_token=api['bot_token'])
 
+@Client.on(events.NewMessage(pattern='/start'))
+async def start(event):
+    msg = "wellcome to the bot"
+    keyboard = [
+        [
+            Button.text('/start'),
+        ],
+        [
+            Button.text('/join'),
+            Button.text('/roll'),
+            Button.text('/betlist'),
+            Button.text('/wallet')
+        ]
+    ]
+    await event.respond(msg, buttons=keyboard)
 
 @Client.on(events.NewMessage(pattern='/join'))
 async def join(event):
@@ -26,37 +41,20 @@ async def roll_dice(event):
     if len(lobby.players)>2:
         for player in lobby.players:
             if player.id == event.chat_id:
-
                 dice1 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
                 dice2 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
 
                 rolls = (dice1.media.value, dice2.media.value)
                 lobby.set_rolls(rolls)
 
-                keyboard = [
-                    [
-                        Button.text('/start'),
-                    ],
-                    [
-                        Button.text('/roll'),
-                        Button.text('/betlist')
-                    ]
-                ]
-                # await Client.send_message('my_channel_username', 'Click the button below:', buttons=keyboard)
-                keyboard2 = [
-                    [Button.inline('Second button' , b'roll')],
-                ]
-                # await Client.send_message(event.chat_id, 'Choose an option:', buttons=keyboard)
-                await event.respond(f"The dice1 rolled: {dice1.media.value}", buttons=keyboard)
-                await event.respond(f"The dice2 rolled: {dice2.media.value}", buttons=keyboard2)
+                await event.respond(f"The dice2 rolled: {dice2.media.value}\nThe dice1 rolled: {dice1.media.value}", buttons=keyboard2)
                 await event.respond(f"the amount of lobby is: {lobby.amount()}")
-
-                players = lobby.players
-                lobby.pay()
-                for player in players:
-                    if event.chat_id == player.id:
-                        wallet = player.wallet()
-                        await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
+                if len(player.betList) == 0:
+                    await event.respond('you should set a bet List. press /betlist')
+                else:
+                    lobby.pay()
+                    wallet = player.wallet()
+                    await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
         else:
             await event.respond('first you should join to a lobby.\npress /join')
     else:
