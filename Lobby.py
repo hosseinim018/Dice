@@ -1,6 +1,6 @@
 from Payout import payout
 class Lobby:
-    def __int__(self, rolls: tuple):
+    def __init__(self, rolls: tuple):
         self.rolls: tuple = rolls
         self.players: list = []
 
