@@ -18,5 +18,8 @@ class Player:
     def getBetAmount(self):
         return self.amount['bet']
 
+    def pay(self, pay:int):
+        self.amount['wallet'] += pay
+
 
 
