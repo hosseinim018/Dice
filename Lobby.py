@@ -24,6 +24,6 @@ class Lobby:
     def get_factors(self):
         total_factor = 0
         for player in self.players:
-            pay = payout(self.rolls, player.predict)
+            pay = payout(self.rolls, player.betList)
             factor = pay.factor()
             total_factor += factor
