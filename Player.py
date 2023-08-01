@@ -19,6 +19,10 @@ class Player:
         return self.amount['bet']
 
     def pay(self, pay:int):
+        """
+        this method increase amount wallet
+        :param pay: amount add with wallet amount
+        """
         self.amount['wallet'] += pay
 
 
