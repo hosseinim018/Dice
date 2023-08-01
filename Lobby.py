@@ -27,3 +27,4 @@ class Lobby:
             pay = payout(self.rolls, player.betList)
             factor = pay.factor()
             total_factor += factor
+        return  total_factor
