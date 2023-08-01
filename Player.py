@@ -1,11 +1,11 @@
 class Player:
-    def __init__(self, id, betList):
+    def __init__(self, id):
         self.amount= {
             'wallet': 50_000,
             'bet': 0
         }
         self.id = id
-        self.betList = betList
+        self.betList = []
         self.factor = 0
 
     def wallet(self):
@@ -28,6 +28,9 @@ class Player:
 
     def get_factor(self):
         return self.factor
+
+    def set_betlist(self, bet:str):
+        self.betList.append(bet)
 
 
 
