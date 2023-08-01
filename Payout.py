@@ -1,7 +1,15 @@
 class payout:
-    def __init__(self):
-        pass
-
+    def __init__(self, rolls: tuple, predict: list, betAmount, lobbyAmount):
+        """
+         Args:
+                rolls(tuple): rolls have 2 index rolls number 1 and 2
+                predict(list): user predicts for bet
+        """
+        self.rolls = rolls
+        self.predict = predict
+        f = self.factor()
+        if f != None:
+            print(f)
     def isEven(self, num:int) -> bool:
         """
             this function check a number is even or odd
@@ -17,18 +25,16 @@ class payout:
         else:
             return False
 
-    def checkGusses(self,rolls: tuple):
+    def checkGusses(self) -> dict:
         """
             Determine whether the user has gussed the correct
-            Args:
-                rolls(tuple): rolls have 2 index rolls number 1 and 2
             Returs:
-                gusses (dict): ---
+                guesses (dict): ---
         """
-        num_roll1, num_roll2 = rolls
+        num_roll1, num_roll2 = self.rolls
         # check roll1/2 is even/odd 
         roll1, roll2 = self.isEven(num_roll1), self.isEven(num_roll2)
-        gusses = {
+        guesses = {
             'minimumEven': False,
             'minimumOdd': False,
             'maximumEven': False,
@@ -39,13 +45,43 @@ class payout:
         }
         # check condition of possible minimum even/odd
         if roll1 == True or roll2 == True:
-            gusses['minimumEven'] = True
-        if roll1 != False or roll2 != False:
-            gusses['minimumOdd'] = True
+            guesses['minimumEven'] = True
+        if roll1 == False or roll2 == False:
+            guesses['minimumOdd'] = True
         # check condition of possible maximum even/odd
         if roll1 == True and roll2 == True:
-            gusses['maximumEven'] = True
-        if roll1 != False and roll2 != False:
-            gusses['maximumOdd'] = True
+            guesses['maximumEven'] = True
+        if roll1 == False and roll2 == False:
+            guesses['maximumOdd'] = True
+
+        return guesses
+    def factor(self):
+        guesses = self.checkGusses()
+        # check validaton predicts
+        win = True
+        factor = 1
+        risks = {
+            'minimumEven': 1 / 2,
+            'minimumOdd': 1 / 2,
+            'maximumEven': 1 / 2,
+            'maximumOdd': 1 / 2,
+            'roll1Even': 1 / 2,
+            'roll2Even': 1 / 2,
+            'sumEven': 1 / 2,
+        }
+        for i in self.predict:
+            if guesses[i]:
+                print(risks[i] + 1)
+                factor *= (risks[i] + 1)
+            else:
+                print('you lose because once of your bets incorrect')
+                print(f'incorrect bet: {i}')
+                win = False
+                break
+        if win:
+            print('you win', factor)
+            return factor
 
 
+
+p = payout((2, 3), ['minimumEven', 'minimumOdd',], 10000, 100000)
