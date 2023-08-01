@@ -1,6 +1,6 @@
 class Player:
     def __init__(self, id):
-        self.amount= {
+        self.amount = {
             'wallet': 50_000,
             'bet': 0
         }
