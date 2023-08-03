@@ -10,6 +10,10 @@ class Lobby:
         self.players.append(player)
         # print(f'player {player.id} joined to the lobby')
 
+    def get_playerID(self):
+        players_id = [player.id for player in self.players]
+        return players_id
+
     def amount(self):
         """
             amount return total amount in laby
