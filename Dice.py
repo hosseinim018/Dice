@@ -4,7 +4,15 @@ from config import api
 from Lobby import Lobby
 from Player import Player
 import re
+from random import randint
 
+def generate_dice():
+    dices = {
+        i: f'animateddice/tgs/{i}.tgs' for i in range(1, 7)
+    }
+    dice_number = randint(1, 6)
+    file_path = dices[dice_number]
+    return dice_number, file_path
 
 lobby = Lobby()
 
@@ -42,16 +50,19 @@ async def join(event):
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
+    lobby_amount = lobby.amount()
+    dice_number1, file_path1 = generate_dice()
+    dice_number2, file_path2 = generate_dice()
     if len(lobby.players) >= 2:
         for player in lobby.players:
-            dice1 = await Client.send_file(player.id, InputMediaDice('🎲'))
-            dice2 = await Client.send_file(player.id, InputMediaDice('🎲'))
 
-            rolls = (dice1.media.value, dice2.media.value)
+            rolls = (dice_number1, dice_number2)
             lobby.set_rolls(rolls)
 
-            await event.respond(f"The dice1 rolled: {dice1.media.value}\nThe dice2 rolled: {dice2.media.value}")
-            await event.respond(f"the amount of lobby is: {lobby.amount()}")
+            await Client.send_message(player.id, file=file_path1)
+            await Client.send_message(player.id, file=file_path2)
+            await Client.send_message(player.id, f"The dice1 rolled: {dice_number1}\nThe dice2 rolled: {dice_number2}")
+            await Client.send_message(player.id, f"the amount of lobby is: {lobby_amount}")
             # print(player.betList)
             if len(player.betList) == 0:
                 await event.respond('you should set a bet List. press /join')
@@ -63,14 +74,13 @@ async def roll_dice(event):
         await event.respond('the number of players for play is not enough, wait or invait your friends')
 
 
-# @Client.on(events.NewMessage(func=lambda event: event.dice))
-@Client.on(events.NewMessage(pattern='/test'))
+# @Client.on(events.NewMessage(pattern='/test'))
+@Client.on(events.NewMessage(func=lambda event: event.dice))
 async def handle_dice(event):
-    # value = event.message.dice.value
-    # event.respond(f"The dice rolled: {value}")
-    sticker = client.upload_file('')
-    file = InputMediaUploadedDocument(sticker, mime_type='image/webp')
-    await Client.send_message(event.chat_id,'ss', file=file)
+    value = event.message.dice.value
+    event.respond(f"The dice rolled: {value}")
+
+
 
 @Client.on(events.CallbackQuery())
 async def handle_callback_query(event):
