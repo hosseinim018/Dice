@@ -68,7 +68,7 @@ class payout:
         }
         for i in self.predict:
             if guesses[i]:
-                print(risks[i] + 1)
+                # print(risks[i] + 1)
                 factor *= (risks[i] + 1)
             else:
                 # print('you lose because once of your bets incorrect')

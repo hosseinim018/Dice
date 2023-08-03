@@ -3,6 +3,7 @@ from telethon.tl.types import InputMediaDice
 from config import api
 from Lobby import Lobby
 from Player import Player
+import re
 
 
 lobby = Lobby()
@@ -17,11 +18,11 @@ async def start(event):
     keyboard = [
         [
             Button.text('/start'),
+            Button.text('/test'),
         ],
         [
             Button.text('/join'),
             Button.text('/roll'),
-            Button.text('/betlist'),
             Button.text('/wallet')
         ]
     ]
@@ -33,59 +34,63 @@ async def join(event):
     lobby.addPlayer(player)
     wallet = player.wallet()
     bet = player.bet(10_000)
+    betlist = ['minimumEven','minimumOdd','maximumEven','maximumOdd','roll1Even','roll2Even','sumEven']
+    # bet.encode('utf-8')
+    keyboard = [[Button.inline(bet , f"betlist-{bet}".encode('utf-8'))] for bet in betlist]
     await event.respond(f'the number of players is: {len(lobby.players)}')
-    await event.respond(f'the total amount of money player {player.id} is ${wallet} with bet with amount {bet}')
+    await event.respond(f'the total amount of money player {player.id} is ${wallet} with bet with amount {bet}\nchoose your bets', buttons=keyboard)
 
 @Client.on(events.NewMessage(pattern='/roll'))
 async def roll_dice(event):
-    if len(lobby.players)>2:
+    if len(lobby.players) >= 2:
         for player in lobby.players:
-            if player.id == event.chat_id:
-                dice1 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
-                dice2 = await Client.send_file(event.chat_id, InputMediaDice('🎲'))
+            dice1 = await Client.send_file(player.id, InputMediaDice('🎲'))
+            dice2 = await Client.send_file(player.id, InputMediaDice('🎲'))
 
-                rolls = (dice1.media.value, dice2.media.value)
-                lobby.set_rolls(rolls)
+            rolls = (dice1.media.value, dice2.media.value)
+            lobby.set_rolls(rolls)
 
-                await event.respond(f"The dice1 rolled: {dice1.media.value}\nThe dice2 rolled: {dice2.media.value}")
-                await event.respond(f"the amount of lobby is: {lobby.amount()}")
-                if len(player.betList) == 0:
-                    await event.respond('you should set a bet List. press /betlist')
-                else:
-                    lobby.pay()
-                    wallet = player.wallet()
-                    await event.respond(f'now the total amount of money player {player.id} is ${wallet}.')
-        else:
-            await event.respond('first you should join to a lobby.\npress /join')
+            await event.respond(f"The dice1 rolled: {dice1.media.value}\nThe dice2 rolled: {dice2.media.value}")
+            await event.respond(f"the amount of lobby is: {lobby.amount()}")
+            # print(player.betList)
+            if len(player.betList) == 0:
+                await event.respond('you should set a bet List. press /join')
+            else:
+                lobby.pay()
+                wallet = player.wallet()
+                await Client.send_message(player.id, f'now the total amount of money player {player.id} is ${wallet}.')
     else:
         await event.respond('the number of players for play is not enough, wait or invait your friends')
 
 
-@Client.on(events.NewMessage(func=lambda event: event.dice))
+# @Client.on(events.NewMessage(func=lambda event: event.dice))
+@Client.on(events.NewMessage(pattern='/test'))
 async def handle_dice(event):
-    value = event.message.dice.value
-    event.respond(f"The dice rolled: {value}")
-
-@Client.on(events.NewMessage(pattern='/betlist'))
-async def Betlist(event):
-    msg = """"""
-    betlist = ['minimumEven','minimumOdd','maximumEven','maximumOdd','roll1Even','roll2Even','sumEven']
-    # bet.encode('utf-8')
-    keyboard = [[Button.inline(bet , 'betlist')] for bet in betlist]
-    await event.respond(msg, buttons=keyboard)
+    # value = event.message.dice.value
+    # event.respond(f"The dice rolled: {value}")
+    sticker = client.upload_file('')
+    file = InputMediaUploadedDocument(sticker, mime_type='image/webp')
+    await Client.send_message(event.chat_id,'ss', file=file)
 
 @Client.on(events.CallbackQuery())
 async def handle_callback_query(event):
-    # Get the callback data from the event
     data = event.data.decode()
-    if data == 'betlist':
-        print(event)
-        print(event.message.text)
+    # Use the `search` function to find the bet prefix in the string
+    betlist = re.search('betlist', data)
+    # Define the regex pattern to match the characters after the 'betlist-' prefix
+    pattern = r'betlist-(.*)'
+    # Use the `search` function to find the characters after the 'betlist-' prefix in the string
+    bet = re.search(pattern, data)
+
+    # Check if the match was found
+    if betlist and bet:
+        bet_prefix = betlist.group()
+        bet_id = bet.group(1)
         for player in lobby.players:
             if player.id == event.chat_id:
-                player.set_betlist(event.message.text)
-        # msg = Client.get_messages(event.chat_id, ids=event.message_id)
-        # print(msg)
+                msg = f"you secelet this {bet_id} bet"
+                await event.respond(msg)
+                player.set_betlist(bet_id)
 
 with Client:
     Client.run_until_disconnected()

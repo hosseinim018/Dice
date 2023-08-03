@@ -28,10 +28,13 @@ class Lobby:
         for player in self.players:
             pay = payout(self.rolls, player.betList)
             factor = pay.factor()
-            player.factor =factor
+            player.factor = factor
             if factor != None:
                 total_factor += factor
-        return total_factor
+        if total_factor == 0:
+            return 1
+        else:
+            return total_factor
 
     def pay(self):
         factor = self.get_factors()
